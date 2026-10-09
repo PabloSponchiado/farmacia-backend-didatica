@@ -1,7 +1,13 @@
 -- ===========================
 -- LIMPEZA (opcional em dev)
 -- ===========================
-DROP TRIGGER IF EXISTS trg_baixa_estoque ON item_venda;
+DO $$
+BEGIN
+  IF to_regclass('public.item_venda') IS NOT NULL THEN
+    EXECUTE 'DROP TRIGGER IF EXISTS trg_baixa_estoque ON public.item_venda';
+  END IF;
+END;
+$$;
 DROP FUNCTION IF EXISTS fn_baixa_estoque();
 
 DROP TABLE IF EXISTS item_venda CASCADE;
